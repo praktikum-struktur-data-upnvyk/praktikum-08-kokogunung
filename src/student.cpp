@@ -85,6 +85,8 @@ void clear(Node*& root) {
 bool insert(Node*& root, int nilai) {
     if(root == nullptr){
         Node* new_nd = new Node;
+        new_nd->left = nullptr;
+        new_nd->right = nullptr;
         new_nd->data = nilai;
         root = new_nd;
         return true;
@@ -310,13 +312,13 @@ const Node* termahalTerbeli(const Node* root, int uang) {
     if(root == nullptr){
         return nullptr;
     }
+    if(minimum(root)->data > uang){
+        return nullptr;
+    }
     if(root->data < uang && root->right != nullptr){
         return termahalTerbeli(root->right, uang);
     }else if(root->data > uang && root->left != nullptr){
         return termahalTerbeli(root->left, uang);
-    }
-    if(root->data > uang){
-        return nullptr;
     }
     return root;
 }
@@ -434,7 +436,7 @@ int main() {
     cout << "    Harga yang tersedia sekarang: ";
     inorder(root);
     cout << "\n";
-    tampilkanNode("uang 65", termahalTerbeli(root, 65));
+    tampilkanNode("uang 59", termahalTerbeli(root, 59));
     tampilkanNode("uang 30 (pas)", termahalTerbeli(root, 30));
     tampilkanNode("uang 45", termahalTerbeli(root, 45));
     tampilkanNode("uang 99", termahalTerbeli(root, 99));
