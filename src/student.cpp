@@ -312,15 +312,19 @@ const Node* termahalTerbeli(const Node* root, int uang) {
     if(root == nullptr){
         return nullptr;
     }
-    if(minimum(root)->data > uang){
-        return nullptr;
+    const Node* ret_nd = nullptr;
+    while(root != nullptr){
+        if(root->data == uang){
+            return root;
+        }
+        if(root->data > uang){
+            root = root->left;
+        }else if(root->data < uang){
+            ret_nd = root;
+            root = root->right;
+        }
     }
-    if(root->data < uang && root->right != nullptr){
-        return termahalTerbeli(root->right, uang);
-    }else if(root->data > uang && root->left != nullptr){
-        return termahalTerbeli(root->left, uang);
-    }
-    return root;
+    return ret_nd;
 }
 
 // =============================================================================
@@ -436,7 +440,7 @@ int main() {
     cout << "    Harga yang tersedia sekarang: ";
     inorder(root);
     cout << "\n";
-    tampilkanNode("uang 59", termahalTerbeli(root, 59));
+    tampilkanNode("uang 65", termahalTerbeli(root, 65));
     tampilkanNode("uang 30 (pas)", termahalTerbeli(root, 30));
     tampilkanNode("uang 45", termahalTerbeli(root, 45));
     tampilkanNode("uang 99", termahalTerbeli(root, 99));
